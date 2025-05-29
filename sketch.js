@@ -19,3 +19,10 @@ function keyPressed() {
     sceneManager.nextScene();
   }
 }
+
+function mousePressed() {
+  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
+}
