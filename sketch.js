@@ -39,7 +39,7 @@ function setup() {
     sceneManager.addScene(scene);
   }
 
-  sceneManager.setScene(12); // StartScene부터 시작
+  sceneManager.setScene(0); // StartScene부터 시작
 }
 
 function draw() {
