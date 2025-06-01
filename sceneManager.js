@@ -2,16 +2,12 @@ class SceneManager {
   constructor() {
     this.scenes = [];
     this.currentIndex = 0;
-    this.transitioning = false;
-    this.transitionProgress = 0;
-    this.transitionSpeed = 20;
     this.currentScene = null;
-    this.nextSceneObj = null;
   }
 
   addScene(scene) {
     this.scenes.push(scene);
-    scene.manager = this;
+    scene.manager = this; // 씬에서 this.manager로 접근 가능
   }
 
   setScene(index) {
@@ -21,40 +17,26 @@ class SceneManager {
   }
 
   nextScene() {
-    if (this.transitioning || this.currentIndex + 1 >= this.scenes.length) return;
-
-    this.transitioning = true;
-    this.transitionProgress = 0;
-    this.nextSceneObj = this.scenes[this.currentIndex + 1];
-    this.nextSceneObj.setup();
+    if (this.currentIndex + 1 < this.scenes.length) {
+      this.setScene(this.currentIndex + 1);
+    }
   }
 
   update() {
-    if (this.transitioning) {
-      this.transitionProgress += this.transitionSpeed;
-      if (this.transitionProgress >= width) {
-        this.transitioning = false;
-        this.setScene(this.currentIndex + 1);
-        this.transitionProgress = 0;
-      }
-    } else {
+    if (this.currentScene && this.currentScene.update) {
       this.currentScene.update();
     }
   }
 
   draw() {
-    if (this.transitioning) {
-      push();
-      translate(-this.transitionProgress, 0);
+    if (this.currentScene && this.currentScene.draw) {
       this.currentScene.draw();
-      pop();
+    }
+  }
 
-      push();
-      translate(width - this.transitionProgress, 0);
-      this.nextSceneObj.draw();
-      pop();
-    } else {
-      this.currentScene.draw();
+  mousePressed() {
+    if (this.currentScene && this.currentScene.mousePressed) {
+      this.currentScene.mousePressed();
     }
   }
 }
