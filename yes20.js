@@ -23,6 +23,14 @@ class Yes20 {
     this.typedText = "";
     this.typeTimer = 0;
     this.isTyping = false;
+    this.finished = false; // No20 참고
+  }
+
+  preload() {
+    this.WithTable = loadImage("assets/20sWithTable.png");
+    this.water = loadImage("assets/water.png");
+    this.Teacher = loadImage("assets/teacherAndChilpan.png");
+    this.sayBalloon = loadImage("assets/sayBalloon.png");
   }
 
   setup() {
@@ -47,24 +55,32 @@ class Yes20 {
   }
 
   draw() {
+    if (this.currentIndex === this.dialogues.length - 1) {
+      this.finished = true;
+    }
+
     background(255);
     rectMode(CENTER);
     imageMode(CENTER);
 
-    image(this.WithTable, this.chx, this.chy, 400, 400);
-    image(this.Teacher, this.thx, this.thy, 500, 400);
-    image(this.water, this.waterx, this.watery, 8, 20);
+    if (this.WithTable) image(this.WithTable, this.chx, this.chy, 400, 400);
+    if (this.Teacher) image(this.Teacher, this.thx, this.thy, 500, 400);
+    //if (this.water) image(this.water, this.waterx, this.watery, 8, 20);
     this.drawBalloon();
     this.drawDialogue();
 
     fill(0);
     textSize(20);
     textAlign(CENTER, BOTTOM);
-    text("말풍선을 클릭해보세요", width / 2, height - 40);
+    if (this.finished) {
+      text("스페이스바를 눌러 다음 씬으로", width / 2, height - 40);
+    } else {
+      text("말풍선을 클릭해보세요", width / 2, height - 40);
+    }
   }
 
   drawBalloon() {
-    if (this.currentIndex >= this.dialogues.length) return;
+    if (this.currentIndex >= this.dialogues.length || !this.sayBalloon) return;
     const dlg = this.dialogues[this.currentIndex];
     const bx = dlg.speaker === "prof" ? this.thx + 100 : this.chx + 80;
     const by = dlg.speaker === "prof" ? this.thy - 150 : this.chy - 250;
@@ -81,6 +97,8 @@ class Yes20 {
         this.charIndex++;
         this.typeTimer = 0;
       }
+    } else if (this.currentIndex === this.dialogues.length - 1) {
+      this.finished = true;
     }
   }
 
@@ -94,7 +112,8 @@ class Yes20 {
   }
 
   mousePressed() {
-    if (this.currentIndex >= this.dialogues.length) return;
+    if (this.finished) return;
+
     const dlg = this.dialogues[this.currentIndex];
     if (this.charIndex < dlg.text.length) {
       this.typedText = dlg.text;
@@ -103,6 +122,13 @@ class Yes20 {
     } else if (this.currentIndex < this.dialogues.length - 1) {
       this.currentIndex++;
       this.startTyping();
+    }
+  }
+
+  keyPressed() {
+    if (this.finished && key === ' ') {
+      console.debug("push space");
+      this.manager.nextScene(); // No20과 동일하게 manager 사용
     }
   }
 

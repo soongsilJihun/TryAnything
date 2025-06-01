@@ -1,31 +1,45 @@
 let sceneManager;
-let imgTable, imgWater, imgTeacher, imgBalloon;
+
+// 각 씬 인스턴스를 전역에서 관리
+let scenes = [];
 
 function preload() {
-  imgTable = loadImage("assets/20sWithTable.png");
-  imgWater = loadImage("assets/water.png");
-  imgTeacher = loadImage("assets/teacherAndChilpan.png");
-  imgBalloon = loadImage("assets/sayBalloon.png");
+  // 필요한 씬만 preload 호출
+  scenes = [
+    new StartScene(),
+    new No20(),
+    new No30(),
+    new No40(),
+    new Imjong(),
+    new ReturnScene(),
+    new Yes20(),
+    new Yes30(),
+    new Wedding30(),
+    new FamilyPic40(),
+    new Yes40(),
+    new HappyEnd(),
+    new LastScene()
+  ];
+
+  // preload()가 있는 경우만 호출
+  for (let scene of scenes) {
+    if (typeof scene.preload === "function") {
+      scene.preload();
+    }
+  }
 }
 
 function setup() {
   createCanvas(1366, 768);
 
-  const no20 = new SceneA();  // 또는 No20으로 이름 바꿔도 좋아
-  const yes20 = new Yes20();
+  sceneManager = new SceneManager();
 
-  // 공통 이미지 삽입
-  for (let scene of [no20, yes20]) {
-    scene.WithTable = imgTable;
-    scene.water = imgWater;
-    scene.Teacher = imgTeacher;
-    scene.sayBalloon = imgBalloon;
+  // 씬 등록 및 manager 설정
+  for (let scene of scenes) {
+    sceneManager.addScene(scene);
   }
 
-  sceneManager = new SceneManager();
-  sceneManager.addScene(no20);  // index 0
-  sceneManager.addScene(yes20); // index 1
-  sceneManager.setScene(0);     // 처음은 no20부터 시작
+  sceneManager.setScene(12); // StartScene부터 시작
 }
 
 function draw() {
@@ -36,3 +50,7 @@ function draw() {
 function mousePressed() {
   sceneManager.mousePressed();
 }
+function keyPressed() {
+  sceneManager.keyPressed();
+}
+
