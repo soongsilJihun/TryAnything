@@ -14,7 +14,7 @@ class No20 {
 
     this.dialogues = [
       { text: "질문 있는 사람?", x: 0, y: 0, align: CENTER, speed: 2, speaker: "prof" },
-      { text: "(얘네 표정이 꼬롬한데..)", x: 0, y: 0, align: CENTER, speed: 2, speaker: "prof" },
+      { text: "(얘네 표정이 불안한데..)", x: 0, y: 0, align: CENTER, speed: 2, speaker: "prof" },
       { text: "질문 없으면 수업 마치겠습니다!!", x: 0, y: 0, align: CENTER, speed: 2, speaker: "prof" },
       { text: "(아 잘 모르겠는데.. 아...)", x: 0, y: 0, align: CENTER, speed: 2, speaker: "student" }
     ];
