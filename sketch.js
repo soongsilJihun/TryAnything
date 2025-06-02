@@ -13,6 +13,8 @@ function preload() {
     new Imjong(),
     new ReturnScene(),
     new Yes20(),
+    new HandCheckScene(),
+    new Yes20AfterHand(),
     new Yes30(),
     new Wedding30(),
     new FamilyPic40(),
@@ -39,7 +41,7 @@ function setup() {
     sceneManager.addScene(scene);
   }
 
-  sceneManager.setScene(0); // StartScene부터 시작
+  sceneManager.setScene(6); // StartScene부터 시작
 }
 
 function draw() {

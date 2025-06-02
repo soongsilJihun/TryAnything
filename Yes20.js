@@ -112,16 +112,18 @@ class Yes20 {
   }
 
   mousePressed() {
-    if (this.finished) return;
-
+    if (this.currentIndex >= this.dialogues.length) return;
     const dlg = this.dialogues[this.currentIndex];
+
     if (this.charIndex < dlg.text.length) {
       this.typedText = dlg.text;
       this.charIndex = dlg.text.length;
       this.isTyping = false;
-    } else if (this.currentIndex < this.dialogues.length - 1) {
+    } else if (this.currentIndex < this.dialogues.length - 2) {
       this.currentIndex++;
       this.startTyping();
+    } else {
+      this.manager.nextScene(); // 👉 HandCheckScene 으로 이동
     }
   }
 

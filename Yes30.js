@@ -1,4 +1,3 @@
-
 class Yes30 {
   constructor() {
     this.bgimg = null;
@@ -18,13 +17,14 @@ class Yes30 {
 
   setup() {
     createCanvas(1366, 768);
+    this.cleanupVideoIfAlive(); // ✅ 웹캠 스트림 강제 종료
   }
 
   update() {}
 
   draw() {
-     imageMode(CORNER);
-    image(this.bgimg, 0,0, width, height);
+    imageMode(CORNER);
+    image(this.bgimg, 0, 0, width, height);
     imageMode(CENTER);
     image(this.img, width / 2 + 150, height / 2 + 200, 300, 400);
     image(this.img1, width / 2 - 180, height / 2 + 200, 280, 400);
@@ -40,5 +40,19 @@ class Yes30 {
 
   mousePressed() {
     this.manager.nextScene();
+  }
+
+  // ✅ 웹캠이 남아 있다면 강제 종료
+  cleanupVideoIfAlive() {
+    const videos = document.querySelectorAll("video");
+
+    videos.forEach(video => {
+      if (video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        console.log("🛑 Yes30에서 비디오 강제 종료");
+      }
+      video.remove();
+    });
   }
 }
