@@ -1,6 +1,7 @@
 class Yes20AfterHand {
   constructor() {
     this.Teacher = null;
+    this.bgimg = null;
     this.sayBalloon = null;
 
     this.thx = 0;
@@ -27,13 +28,14 @@ class Yes20AfterHand {
   }
 
   setup() {
-    createCanvas(1366, 768);
-    this.cleanupVideoIfAlive(); // 혹시 남은 웹캠 제거
+    createCanvas(1366, 768); // 원하는 해상도 유지
+    this.cleanupVideoIfAlive();
 
     this.thx = width / 2;
-    this.thy = height / 2 + 100;
-    this.dialogue.x = this.thx + 100;
-    this.dialogue.y = this.thy - 150;
+    this.thy = height / 2 + 200; // 캐릭터를 아래로 내림
+
+    this.dialogue.x = this.thx + 200; // 말풍선 오른쪽 상단
+    this.dialogue.y = this.thy - 300;
 
     this.startTyping();
   }
@@ -44,10 +46,11 @@ class Yes20AfterHand {
 
   draw() {
     background(255);
-    imageMode(CENTER);
+    imageMode(CORNER);
 
-    if (this.Teacher) image(this.Teacher, this.thx, this.thy, 500, 400);
-    if (this.sayBalloon) image(this.sayBalloon, this.dialogue.x, this.dialogue.y, 300, 200);
+    imageMode(CENTER);
+    if (this.Teacher) image(this.Teacher, this.thx, this.thy-200, 650, 550); // 🔍 더 크게
+    if (this.sayBalloon) image(this.sayBalloon, this.dialogue.x, this.dialogue.y-100, 400, 250); // 더 크게
 
     this.drawDialogue();
 
@@ -55,15 +58,15 @@ class Yes20AfterHand {
     textSize(20);
     textAlign(CENTER, BOTTOM);
     if (this.finished) {
-      text("스페이스바를 눌러 다음 씬으로", width / 2, height - 40);
+      text("마우스 클릭으로 다음 씬으로", width / 2, height - 40);
     }
   }
 
   drawDialogue() {
     fill(0);
-    textSize(20);
+    textSize(24);
     textAlign(this.dialogue.align, CENTER);
-    text(this.typedText, this.dialogue.x, this.dialogue.y);
+    text(this.typedText, this.dialogue.x, this.dialogue.y-140);
   }
 
   updateDialogue() {
@@ -93,6 +96,9 @@ class Yes20AfterHand {
       console.debug("space → nextScene");
       this.manager.nextScene();
     }
+  }
+  mousePressed(){
+    this.manager.nextScene(); // 클릭 시 다음 씬으로 이동
   }
 
   cleanupVideoIfAlive() {
