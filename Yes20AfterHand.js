@@ -58,7 +58,7 @@ class Yes20AfterHand {
     textSize(20);
     textAlign(CENTER, BOTTOM);
     if (this.finished) {
-      text("마우스 클릭으로 다음 씬으로", width / 2, height - 40);
+      text("마우스 클릭으로 다음 씬으로 ", width / 2, height - 40);
     }
   }
 

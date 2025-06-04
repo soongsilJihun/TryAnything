@@ -109,7 +109,7 @@ class No20 {
     fill(0);
     textSize(20);
     textAlign(dlg.align, CENTER);
-    text(this.typedText, dlg.x, dlg.y);
+    text(this.typedText, dlg.x, dlg.y-35);
   }
 
   mousePressed() {

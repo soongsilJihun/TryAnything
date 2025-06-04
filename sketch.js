@@ -19,6 +19,7 @@ function preload() {
     new Wedding30(),
     new FamilyPic40(),
     new Yes40(),
+    new Youtube40(),
     new HappyEnd(),
     new LastScene()
   ];
@@ -41,7 +42,7 @@ function setup() {
     sceneManager.addScene(scene);
   }
 
-  sceneManager.setScene(0); // StartScene부터 시작
+  sceneManager.setScene(10); // StartScene부터 시작
 }
 
 function draw() {
