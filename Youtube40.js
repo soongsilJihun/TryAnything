@@ -1,23 +1,23 @@
 class Youtube40 {
   constructor() {
-    // 이미지
     this.bg = null;
     this.silverImg = null;
     this.goldImg = null;
     this.diaImg = null;
+    
 
-    // 상태
+    this.isfinished = false;
     this.channelName = "";
     this.submitted = false;
     this.startTime = 0;
     this.duration = 3000;
+
     this.targetSubs = 1000000;
     this.targetViews = 999999999;
     this.currentSubs = 1;
     this.currentViews = 1;
     this.keyCount = 0;
 
-    // UI
     this.input = null;
     this.button = null;
   }
@@ -31,10 +31,18 @@ class Youtube40 {
 
   setup() {
     createCanvas(1366, 768);
+    if (this.input && this.button) {
+        console.log("이미 input/button 있음 - setup 스킵");
+        return;
+    }
+
+    console.log("input/button 생성!");
+    // 입력창
     this.input = createInput();
     this.input.position(600, 220);
     this.input.size(280);
 
+    // 버튼
     this.button = createButton("입력 완료");
     this.button.position(this.input.x + this.input.width + 10, 220);
     this.button.mousePressed(() => this.saveName());
@@ -44,6 +52,9 @@ class Youtube40 {
     background(this.bg);
 
     if (!this.submitted) {
+      this.input.show();
+      this.button.show();
+
       fill(0);
       textAlign(CENTER);
       textSize(24);
@@ -53,6 +64,9 @@ class Youtube40 {
       textAlign(LEFT);
       text("유튜브 채널명을 입력하세요.", 600, 200);
     } else {
+      this.input.hide();
+      this.button.hide();
+
       fill(0);
       textSize(32);
       textAlign(LEFT);
@@ -78,6 +92,7 @@ class Youtube40 {
 
       if (elapsed >= this.duration) {
         this.showResult();
+        this.isfinished = true;
       }
     }
   }
@@ -87,16 +102,25 @@ class Youtube40 {
       this.keyCount++;
     }
   }
+  
+  cleanup() {
+    if (this.input) {
+      console.log("Input removed");
+      this.input.remove();   // 완전 제거
+    }
 
+    if (this.button) {
+      this.button.remove(); // 완전 제거
+    }
+  }
   saveName() {
     this.channelName = this.input.value();
+    if (this.channelName.trim() === "") return; // 빈 채널명 방지
     this.submitted = true;
-    this.input.hide();
-    this.button.hide();
     this.startTime = millis();
     this.keyCount = 0;
+    this.cleanup();
   }
-
   showResult() {
     background(200);
 
@@ -123,3 +147,4 @@ class Youtube40 {
     text(resultText, width / 2, height / 2 - 220);
   }
 }
+
