@@ -31,9 +31,9 @@ class No40 {
 
   draw() {
     image(this.bgImg, 0, 0, width, height);
-    image(this.btn1, 150, 80, 200, 250);
-    image(this.btn2, 550, 80, 200, 250);
-    image(this.btn3, 900, 150, 200, 150);
+    // image(this.btn1, 150, 80, 200, 250);
+    // image(this.btn2, 550, 80, 200, 250);
+    // image(this.btn3, 900, 150, 200, 150);
     image(this.btn4, 300, 440, 290, 390);
     image(this.btn5, 700, 440, 290, 390);
     image(this.btn6, 950, 300, 400, 200);
