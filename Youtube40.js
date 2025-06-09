@@ -146,5 +146,12 @@ class Youtube40 {
     textAlign(CENTER, CENTER);
     text(resultText, width / 2, height / 2 - 220);
   }
+  mousePressed()
+  {
+    if(this.isfinished){
+      
+      this.manager.nextScene();
+    }
+  }
 }
 

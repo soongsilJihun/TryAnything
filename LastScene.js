@@ -25,7 +25,7 @@ class LastScene {
   }
 
   mousePressed() {
-    // 필요하다면 다음 씬으로 넘어가게 만들 수 있음
-    // this.manager.nextScene();
+
+    this.manager.nextScene();
   }
 }
