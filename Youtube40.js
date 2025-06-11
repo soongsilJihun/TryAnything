@@ -79,8 +79,8 @@ class Youtube40 {
       textAlign(LEFT);
       text("유튜브 채널명을 입력하세요.", 600, 200);
     } else {
-      this.input.hide();
-      this.button.hide();
+      if (this.input) this.input.hide();  // ✅ null 체크 추가
+      if (this.button) this.button.hide(); // ✅ null 체크 추가
 
       fill(0);
       textSize(32);
