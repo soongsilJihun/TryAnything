@@ -71,9 +71,9 @@ class Yes40 {
     if (this.currentIndex >= this.dialogues.length) return;
     const dlg = this.dialogues[this.currentIndex];
     if (dlg.speaker === "left") {
-      image(this.balloonLeft, dlg.x - 50, dlg.y - 80, 300, 200);
+      image(this.balloonLeft, dlg.x - 0, dlg.y - 80, 300, 200);
     } else {
-      image(this.balloonRight, dlg.x - 50, dlg.y - 80, 400, 200);
+      image(this.balloonRight, dlg.x + 20, dlg.y - 70, 400, 200);
     }
   }
 
@@ -83,7 +83,7 @@ class Yes40 {
     fill(0);
     textSize(24);
     textAlign(dlg.align, CENTER);
-    text(this.typedText, dlg.x, dlg.y - 35);
+    text(this.typedText, dlg.x, dlg.y - 80);
   }
 
   updateDialogue() {

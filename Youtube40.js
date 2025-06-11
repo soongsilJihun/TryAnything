@@ -4,7 +4,6 @@ class Youtube40 {
     this.silverImg = null;
     this.goldImg = null;
     this.diaImg = null;
-    
 
     this.isfinished = false;
     this.channelName = "";
@@ -20,6 +19,8 @@ class Youtube40 {
 
     this.input = null;
     this.button = null;
+
+    this.canvas = null; // canvas DOM 참조용
   }
 
   preload() {
@@ -30,26 +31,40 @@ class Youtube40 {
   }
 
   setup() {
-    createCanvas(1366, 768);
+    this.canvas = createCanvas(1366, 768);
+
     if (this.input && this.button) {
-        console.log("이미 input/button 있음 - setup 스킵");
-        return;
+      console.log("이미 input/button 있음 - setup 스킵");
+      return;
     }
 
     console.log("input/button 생성!");
-    // 입력창
+
     this.input = createInput();
-    this.input.position(600, 220);
     this.input.size(280);
 
-    // 버튼
     this.button = createButton("입력 완료");
-    this.button.position(this.input.x + this.input.width + 10, 220);
     this.button.mousePressed(() => this.saveName());
+
+    this.updateUIPosition(); // ✅ 초기 위치 설정
+  }
+
+  updateUIPosition() {
+    if (!this.canvas || !this.input || !this.button) return;
+
+    const canvasX = this.canvas.position().x;
+    const canvasY = this.canvas.position().y;
+
+    this.input.position(canvasX + 600, canvasY + 200);
+    this.button.position(canvasX + 600 + 280 + 10, canvasY + 200);
   }
 
   draw() {
-    background(this.bg);
+    imageMode(CORNER);
+    image(this.bg, 0, 0, width, height);
+    imageMode(CENTER);
+
+    this.updateUIPosition(); // ✅ draw마다 위치 재확인 (캔버스 위치 바뀌는 경우 대응)
 
     if (!this.submitted) {
       this.input.show();
@@ -102,25 +117,28 @@ class Youtube40 {
       this.keyCount++;
     }
   }
-  
+
   cleanup() {
     if (this.input) {
-      console.log("Input removed");
-      this.input.remove();   // 완전 제거
+      this.input.remove();
+      this.input = null;
     }
 
     if (this.button) {
-      this.button.remove(); // 완전 제거
+      this.button.remove();
+      this.button = null;
     }
   }
+
   saveName() {
     this.channelName = this.input.value();
-    if (this.channelName.trim() === "") return; // 빈 채널명 방지
+    if (this.channelName.trim() === "") return;
     this.submitted = true;
     this.startTime = millis();
     this.keyCount = 0;
     this.cleanup();
   }
+
   showResult() {
     background(200);
 
@@ -146,12 +164,10 @@ class Youtube40 {
     textAlign(CENTER, CENTER);
     text(resultText, width / 2, height / 2 - 220);
   }
-  mousePressed()
-  {
-    if(this.isfinished){
-      
+
+  mousePressed() {
+    if (this.isfinished) {
       this.manager.nextScene();
     }
   }
 }
-

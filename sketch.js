@@ -27,7 +27,7 @@ function preload() {
   // preload()가 있는 경우만 호출
   for (let scene of scenes) {
     if (typeof scene.preload === "function") {
-      scene.preload();
+      scene.preload(0);
     }
   }
 }
@@ -42,8 +42,10 @@ function setup() {
     sceneManager.addScene(scene);
   }
 
-  sceneManager.setScene(0); // StartScene부터 시작
+  sceneManager.setScene(10); // StartScene부터 시작
 }
+
+
 
 function draw() {
   sceneManager.update();
